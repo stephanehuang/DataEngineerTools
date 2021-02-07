@@ -2,7 +2,14 @@
 
 ## Installer et Lancer
 
+Pour clone l'environnement, utiliser la command 
+```
+pip install -r requirement.txt 
+conda env create -n <nom> -f conda_environment.yml
+```
+
 #### Lancer votre MongoDB
+
 
 Dans votre terminal, taper le commande:
 
