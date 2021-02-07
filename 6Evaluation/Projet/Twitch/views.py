@@ -68,13 +68,12 @@ def directory():
 @app.route('/search/<item>')
 def get_result(item=None):
     keyword = request.args.get("key")
-    cursor = db['games'].find({'name': keyword})
-    result_list = next(cursor)
-    if result_list:
-        return redirect("https://www.twitch.tv/directory/game/"+result_list['name'].replace(' ', '%20'))
+    if(next(db['games'].find({'name': keyword}))):
+        return redirect("https://www.twitch.tv/directory/game/"+next(db['games'].find({'name': keyword}))['name'].replace(' ', '%20'))
+    elif (next(db['channels'].find({'name': keyword}))):
+        return redirect("https://www.twitch.tv/" + next(db['channels'].find({'name': keyword}))['streamername'].lower())
     else:
-        const = 1
-        return render_template('index.html', verify=const)
+        return render_template('index.html', verify=1)
 
 # @app.route('/anchor-list')
 # def list():

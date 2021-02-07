@@ -11,12 +11,14 @@ class ChannelsspiSpider(scrapy.Spider):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.bro = webdriver.Chrome(
-            "D:/king9/Projets/Data engineering/DataEngineerTools/6Evaluation/Projet/channels/channels/chromedriver.exe")
+        self.bro = webdriver.Chrome("chromedriver.exe")
 
     def parse(self, response):
         yield scrapy.http.Request(url='https://twitchtracker.com/channels/live/english', callback=self.parsest)
         yield scrapy.http.Request(url='https://twitchtracker.com/games', callback=self.parseg)
+        for i in range(2, 5):
+            yield scrapy.http.Request(url='https://twitchtracker.com/games?page='+str(i), callback=self.parseg)
+            yield scrapy.http.Request(url='https://twitchtracker.com/channels/live/english?page='+str(i), callback=self.parsest)
 
     def parseg(self, response):
         parse_content = response.xpath('//div[@class = "ranked-item"]')
